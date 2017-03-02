@@ -1,29 +1,28 @@
 <?php
+echo "<h2>隣接リスト</h2>";
 try{
     $pdo = new PDO(sprintf('mysql:host=%s;dbname=%s;charset=utf8', 'localhost', 'chapter2'), 'root', 'vagrant', array(PDO::ATTR_EMULATE_PREPARES => false));
 }catch (PDOException $e) {
-    echo 'Connection failed: ' . $e->getMessage();
-    die;
+    die('Connection failed: ' . $e->getMessage());
 }
 
-if(isset($_SERVER['REQUEST_METHOD'])){
-    if($_SERVER['REQUEST_METHOD'] == 'POST'){
-$stmt = $pdo->prepare("SELECT count(*) as cnt FROM Comments WHERE comment_id = :COMMENT_ID");
-$stmt->bindValue(':COMMENT_ID',$_POST['key']);
-$stmt->execute();
-$row = $stmt->fetch();
-        if($row['cnt'] == 0){
-           $parent_id = null;
-        }else{
-           $parent_id = $_POST['key'];
-        }
-        $stmt = $pdo->prepare("insert into  Comments values(null,:PARENT_ID,:COMMENT)");
-        $stmt->bindValue(':PARENT_ID',$parent_id);
-        $stmt->bindValue(':COMMENT',$_POST['comment']);
-        $stmt->execute();
+if($_SERVER['REQUEST_METHOD'] == 'POST'){
+    $stmt = $pdo->prepare("SELECT count(*) as cnt FROM Comments WHERE comment_id = :COMMENT_ID");
+    $stmt->bindValue(':COMMENT_ID',$_POST['key']);
+    $stmt->execute();
+    $row = $stmt->fetch();
+    if($row['cnt'] == 0){
+       $parent_id = null;
+    }else{
+       $parent_id = $_POST['key'];
     }
+    $stmt = $pdo->prepare("insert into  Comments values(null,:PARENT_ID,:COMMENT)");
+    $stmt->bindValue(':PARENT_ID',$parent_id);
+    $stmt->bindValue(':COMMENT',$_POST['comment']);
+    $stmt->execute();
+    header('location: comments_22.php');
+    exit();
 }
-echo "<h2>隣接リスト</h2>";
 
 $key = array_key_exists('key',$_GET) ?  $_GET['key'] : 1;
 
