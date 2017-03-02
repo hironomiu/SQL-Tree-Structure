@@ -1,5 +1,3 @@
-create database chapter2;
-
 drop table Comments;
 
 create table Comments (
