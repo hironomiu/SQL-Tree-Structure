@@ -7,6 +7,7 @@ try{
 }
 
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
+    $pdo->beginTransaction();
     $stmt = $pdo->prepare("insert into Comments_253 (bug_id,author,comment_date,comment) values (1,4,now(),:COMMENT)");
     $stmt->bindValue(':COMMENT',$_POST['comment']);
     $stmt->execute();
@@ -16,6 +17,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     $stmt->bindValue(':ANCESTOR',$pdo->lastInsertId());
     $stmt->bindValue(':DESCENDANT2',$pdo->lastInsertId());
     $stmt->execute();
+    $pdo->commit();
     header('location: comments_253.php');
     exit();
 }
