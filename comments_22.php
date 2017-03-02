@@ -4,19 +4,19 @@ try{
     $pdo = new PDO(sprintf('mysql:host=%s;dbname=%s;charset=utf8', 'localhost', 'chapter2'), 'root', 'vagrant', array(PDO::ATTR_EMULATE_PREPARES => false));
 }catch (PDOException $e) {
     echo 'Connection failed: ' . $e->getMessage();
-    die;
+die;
 }
 echo "<h2>隣接リスト</h2>";
 if(isset($_SERVER['REQUEST_METHOD'])){
     if($_SERVER['REQUEST_METHOD'] == 'POST'){
-$stmt = $pdo->prepare("SELECT count(*) as cnt FROM Comments_22 WHERE comment_id = :COMMENT_ID");
-$stmt->bindValue(':COMMENT_ID',$_POST['key']);
-$stmt->execute();
-$row = $stmt->fetch();
+        $stmt = $pdo->prepare("SELECT count(*) as cnt FROM Comments_22 WHERE comment_id = :COMMENT_ID");
+        $stmt->bindValue(':COMMENT_ID',$_POST['key']);
+        $stmt->execute();
+        $row = $stmt->fetch();
         if($row['cnt'] == 0){
-           $parent_id = null;
+            $parent_id = null;
         }else{
-           $parent_id = $_POST['key'];
+            $parent_id = $_POST['key'];
         }
         $stmt = $pdo->prepare("insert into  Comments_22 values(null,:PARENT_ID,1,4,now(),:COMMENT)");
         $stmt->bindValue(':PARENT_ID',$_POST['key']);
