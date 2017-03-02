@@ -1,13 +1,13 @@
 <?php
+echo "<h2>経路列挙</h2>";
 try{
     $pdo = new PDO(sprintf('mysql:host=%s;dbname=%s;charset=utf8', 'localhost', 'chapter2'), 'root', 'vagrant', array(PDO::ATTR_EMULATE_PREPARES => false));
 }catch (PDOException $e) {
-    echo 'Connection failed: ' . $e->getMessage();
-    die;
+    die( 'Connection failed: ' . $e->getMessage());
 }
 
 if(isset($_SERVER['REQUEST_METHOD'])){
-    if($_SERVER['REQUEST_METHOD'] == 'POST'){
+    if($_SERVER['REQUEST_METHOD'] === 'POST'){
         $stmt = $pdo->prepare("insert into  Comments_251(bug_id,author,comment_date,comment) values(1,4,now(),:COMMENT)");
         $stmt->bindValue(':COMMENT',$_POST['comment']);
         $stmt->execute();
@@ -16,9 +16,10 @@ if(isset($_SERVER['REQUEST_METHOD'])){
         $stmt->bindValue(':COMMENT_ID',$_POST['key']);
         $stmt->bindValue(':LAST_INSERT_ID2',$pdo->lastInsertId());
         $stmt->execute();
+        header('location: comments_251.php');
+        exit();
     }
 }
-echo "<h2>経路列挙</h2>";
 
 $key = array_key_exists('key',$_GET) ?  $_GET['key'] : 1;
 
@@ -35,10 +36,8 @@ if(isset($row['comment'])){
 }
 
 
-function commentsFindByCommentId($key,$pdo,$comment_id)
-{
-
-$stmt = $pdo->prepare("SELECT * FROM Comments_251 c inner join Accounts a on c.author = a.account_id WHERE c.path like concat(:PATH,'%') and c.comment_id != :COMMENT_ID order by c.path");
+function commentsFindByCommentId($key,$pdo,$comment_id) { 
+    $stmt = $pdo->prepare("SELECT * FROM Comments_251 c inner join Accounts a on c.author = a.account_id WHERE c.path like concat(:PATH,'%') and c.comment_id != :COMMENT_ID order by c.path");
     $stmt->bindValue(':PATH',$key);
     $stmt->bindValue(':COMMENT_ID',$comment_id);
     $stmt->execute();

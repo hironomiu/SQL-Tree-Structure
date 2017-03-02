@@ -8,7 +8,7 @@ try{
 }
 
 if(isset($_SERVER['REQUEST_METHOD'])){
-    if($_SERVER['REQUEST_METHOD'] == 'POST'){
+    if($_SERVER['REQUEST_METHOD'] === 'POST'){
         $stmt = $pdo->prepare("insert into Comments_253 (bug_id,author,comment_date,comment) values (1,4,now(),:COMMENT)");
         $stmt->bindValue(':COMMENT',$_POST['comment']);
         $stmt->execute();
@@ -18,6 +18,8 @@ if(isset($_SERVER['REQUEST_METHOD'])){
         $stmt->bindValue(':ANCESTOR',$pdo->lastInsertId());
         $stmt->bindValue(':DESCENDANT2',$pdo->lastInsertId());
         $stmt->execute();
+        header('location: comments_253.php');
+        exit();
     }
 }
 

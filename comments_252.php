@@ -1,14 +1,13 @@
 <?php
-
+echo "<h2>入れ子集合</h2>";
 try{
     $pdo = new PDO(sprintf('mysql:host=%s;dbname=%s;charset=utf8', 'localhost', 'chapter2'), 'root', 'vagrant', array(PDO::ATTR_EMULATE_PREPARES => false));
 }catch (PDOException $e) {
-    echo 'Connection failed: ' . $e->getMessage();
-    die;
+    die( 'Connection failed: ' . $e->getMessage());
 }
 
 if(isset($_SERVER['REQUEST_METHOD'])){
-    if($_SERVER['REQUEST_METHOD'] == 'POST'){
+    if($_SERVER['REQUEST_METHOD'] === 'POST'){
         $stmt = $pdo->prepare("select nsright - 1 as nsright from Comments_252 where comment_id = :COMMENT_ID");
         $stmt->bindValue(':COMMENT_ID',$_POST['key']);
         $stmt->execute();
@@ -19,13 +18,14 @@ if(isset($_SERVER['REQUEST_METHOD'])){
         $stmt->bindValue(':NSRIGHT2',$row['nsright']);
         $stmt->execute();
         $stmt = $pdo->prepare("insert into Comments_252(nsleft,nsright,bug_id,author,comment_date,comment) values(:NSRIGHT +  1,:NSLEFT + 2,1,4,now(),:COMMENT)");
-        $stmt->bindValue(':NSRIGHT',$row['nsright']);
-        $stmt->bindValue(':NSLEFT',$row['nsright']);
+        $stmt->bindValue(':NSRIGHT',$row['nsright'] + 1);
+        $stmt->bindValue(':NSLEFT',$row['nsright'] + 2);
         $stmt->bindValue(':COMMENT',$_POST['comment']);
         $stmt->execute();
+        header('location: comments_252.php');
+        exit();
     }
 }
-echo "<h2>入れ子集合</h2>";
 
 $key = array_key_exists('key',$_GET) ?  $_GET['key'] : 1;
 
