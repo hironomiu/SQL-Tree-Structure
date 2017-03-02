@@ -5,25 +5,23 @@ try{
 }catch (PDOException $e) {
     die('Connection failed: ' . $e->getMessage());
 }
-if(isset($_SERVER['REQUEST_METHOD'])){
-    if($_SERVER['REQUEST_METHOD'] === 'POST'){
-        $parent_id = null;
-        if(!empty($_POST['key'])){
-	    $stmt = $pdo->prepare("SELECT count(*) as cnt FROM Comments_22 WHERE comment_id = :COMMENT_ID");
-	    $stmt->bindValue(':COMMENT_ID',$_POST['key']);
-	    $stmt->execute();
-	    $row = $stmt->fetch();
-	    if($row['cnt'] != "0"){
-                $parent_id = $_POST['key'];
-	    }
-	}
-        $stmt = $pdo->prepare("insert into  Comments_22(comment_id,parent_id,bug_id,author,comment_date,comment) values(null,:PARENT_ID,1,4,now(),:COMMENT)");
-        $ret = $stmt->bindValue(':PARENT_ID',$parent_id);
-        $stmt->bindValue(':COMMENT',$_POST['comment']);
-        $ret = $stmt->execute();
-        header('location: comments_22.php');
-        exit();
+if($_SERVER['REQUEST_METHOD'] === 'POST'){
+    $parent_id = null;
+    if(!empty($_POST['key'])){
+        $stmt = $pdo->prepare("SELECT count(*) as cnt FROM Comments_22 WHERE comment_id = :COMMENT_ID");
+        $stmt->bindValue(':COMMENT_ID',$_POST['key']);
+        $stmt->execute();
+        $row = $stmt->fetch();
+        if($row['cnt'] != "0"){
+            $parent_id = $_POST['key'];
+        }
     }
+    $stmt = $pdo->prepare("insert into  Comments_22(comment_id,parent_id,bug_id,author,comment_date,comment) values(null,:PARENT_ID,1,4,now(),:COMMENT)");
+    $ret = $stmt->bindValue(':PARENT_ID',$parent_id);
+    $stmt->bindValue(':COMMENT',$_POST['comment']);
+    $ret = $stmt->execute();
+    header('location: comments_22.php');
+    exit();
 }
 
 $key = array_key_exists('key',$_GET) ?  $_GET['key'] : 1;

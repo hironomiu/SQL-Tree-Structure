@@ -1,29 +1,24 @@
 <?php
-
+echo "<h2>閉包テーブル</h2>";
 try{
     $pdo = new PDO(sprintf('mysql:host=%s;dbname=%s;charset=utf8', 'localhost', 'chapter2'), 'root', 'vagrant', array(PDO::ATTR_EMULATE_PREPARES => false));
 }catch (PDOException $e) {
-    echo 'Connection failed: ' . $e->getMessage();
-    die;
+    die('Connection failed: ' . $e->getMessage());
 }
 
-if(isset($_SERVER['REQUEST_METHOD'])){
-    if($_SERVER['REQUEST_METHOD'] === 'POST'){
-        $stmt = $pdo->prepare("insert into Comments_253 (bug_id,author,comment_date,comment) values (1,4,now(),:COMMENT)");
-        $stmt->bindValue(':COMMENT',$_POST['comment']);
-        $stmt->execute();
-        $stmt = $pdo->prepare("insert into TreePaths(ancestor,descendant) select t.ancestor,:DESCENDANT1 from TreePaths as t where t.descendant = :PARENT_ID union all select :ANCESTOR,:DESCENDANT2");
-        $stmt->bindValue(':DESCENDANT1',$pdo->lastInsertId());
-        $stmt->bindValue(':PARENT_ID',$_POST['key']);
-        $stmt->bindValue(':ANCESTOR',$pdo->lastInsertId());
-        $stmt->bindValue(':DESCENDANT2',$pdo->lastInsertId());
-        $stmt->execute();
-        header('location: comments_253.php');
-        exit();
-    }
+if($_SERVER['REQUEST_METHOD'] === 'POST'){
+    $stmt = $pdo->prepare("insert into Comments_253 (bug_id,author,comment_date,comment) values (1,4,now(),:COMMENT)");
+    $stmt->bindValue(':COMMENT',$_POST['comment']);
+    $stmt->execute();
+    $stmt = $pdo->prepare("insert into TreePaths(ancestor,descendant) select t.ancestor,:DESCENDANT1 from TreePaths as t where t.descendant = :PARENT_ID union all select :ANCESTOR,:DESCENDANT2");
+    $stmt->bindValue(':DESCENDANT1',$pdo->lastInsertId());
+    $stmt->bindValue(':PARENT_ID',$_POST['key']);
+    $stmt->bindValue(':ANCESTOR',$pdo->lastInsertId());
+    $stmt->bindValue(':DESCENDANT2',$pdo->lastInsertId());
+    $stmt->execute();
+    header('location: comments_253.php');
+    exit();
 }
-
-echo "<h2>閉包テーブル</h2>";
 
 $key = array_key_exists('key',$_GET) ?  $_GET['key'] : 1;
 
