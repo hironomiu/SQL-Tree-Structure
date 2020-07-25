@@ -1,6 +1,5 @@
 <?php
 require_once('./db.php');
-echo "<h2>隣接リスト</h2>";
 
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
     $parent_id = null;
@@ -21,6 +20,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     exit();
 }
 
+echo "<h2>隣接リスト(adjacency list、AccountsとJOIN)</h2>";
 $key = array_key_exists('key',$_GET) ?  $_GET['key'] : 1;
 
 $stmt = $pdo->prepare("SELECT * FROM Comments_22 c inner join Accounts a on c.author = a.account_id WHERE c.comment_id = :COMMENT_ID");

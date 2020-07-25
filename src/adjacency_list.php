@@ -1,7 +1,5 @@
 <?php
-define('__ROOT__', dirname(dirname(__FILE__)));
-//require_once(__ROOT__.'/config/db_config.php');
-require_once('./db.php');
+require_once(__DIR__.'/db.php');
 
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
     $stmt = $pdo->prepare("SELECT count(*) as cnt FROM Comments WHERE comment_id = :COMMENT_ID");

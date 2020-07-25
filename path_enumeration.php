@@ -1,10 +1,5 @@
 <?php
-echo "<h2>経路列挙</h2>";
-try{
-    $pdo = new PDO(sprintf('mysql:host=%s;dbname=%s;charset=utf8', 'localhost', 'chapter2'), 'root', 'vagrant', array(PDO::ATTR_EMULATE_PREPARES => false));
-}catch (PDOException $e) {
-    die( 'Connection failed: ' . $e->getMessage());
-}
+require_once('./db.php');
 
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
     $stmt = $pdo->prepare("insert into  Comments_251(bug_id,author,comment_date,comment) values(1,4,now(),:COMMENT)");
@@ -15,9 +10,11 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     $stmt->bindValue(':COMMENT_ID',$_POST['key']);
     $stmt->bindValue(':LAST_INSERT_ID2',$pdo->lastInsertId());
     $stmt->execute();
-    header('location: comments_251.php');
+    header('location: path_enumeration.php');
     exit();
 }
+
+echo "<h2>経路列挙(Path Enumeration)</h2>";
 
 $key = array_key_exists('key',$_GET) ?  $_GET['key'] : 1;
 
