@@ -22,9 +22,12 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
 echo "<h2>隣接リスト(adjacency list)</h2>";
 
-//$key = array_key_exists('key',$_GET) ?  $_GET['key'] : 1;
-
-$parent_stmt = $pdo->prepare("SELECT comment_id FROM Comments WHERE parent_id is null");
+if(array_key_exists('key',$_GET)){
+   $parent_stmt = $pdo->prepare("SELECT comment_id FROM Comments WHERE comment_id = :COMMENT_ID");
+   $parent_stmt->bindValue(':COMMENT_ID',$_GET['key']);
+} else {
+   $parent_stmt = $pdo->prepare("SELECT comment_id FROM Comments WHERE parent_id is null");
+}
 $parent_stmt->execute();
 $parent_rows = $parent_stmt->fetchAll();
 
