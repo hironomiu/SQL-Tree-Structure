@@ -1,10 +1,5 @@
 <?php
-echo "<h2>入れ子集合</h2>";
-try{
-    $pdo = new PDO(sprintf('mysql:host=%s;dbname=%s;charset=utf8', 'localhost', 'chapter2'), 'root', 'vagrant', array(PDO::ATTR_EMULATE_PREPARES => false));
-}catch (PDOException $e) {
-    die( 'Connection failed: ' . $e->getMessage());
-}
+require_once(__DIR__ . '/db.php');
 
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
     $stmt = $pdo->prepare("select nsright - 1 as nsright from Comments_252 where comment_id = :COMMENT_ID");
@@ -23,6 +18,9 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     header('location: comments_252.php');
     exit();
 }
+
+echo '<link rel="stylesheet" href="/css/base.css">';
+echo "<h2>入れ子集合(Nested sets)</h2>";
 
 $key = array_key_exists('key',$_GET) ?  $_GET['key'] : 1;
 

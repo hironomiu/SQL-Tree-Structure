@@ -14,9 +14,10 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     exit();
 }
 
+echo '<link rel="stylesheet" href="/css/base.css">';
 echo "<h2>経路列挙(Path Enumeration)</h2>";
 
-$key = array_key_exists('key',$_GET) ?  $_GET['key'] : 1;
+$key = array_key_exists('key',$_GET) ?  $_GET['key'] : 10;
 
 $stmt = $pdo->prepare("SELECT * FROM Comments_251 c inner join Accounts a on c.author = a.account_id WHERE c.comment_id = :COMMENT_ID");
 $stmt->bindValue(':COMMENT_ID',$key);
@@ -41,7 +42,7 @@ function commentsFindByCommentId($key,$pdo,$comment_id) {
         for($i = 0;$i < $length;$i++){
             echo "<ul>";
         }
-        echo "<li>" . $row['comment_id'] . ":" . $row['comment'] . "(" . $row['name'] .")" .  "</li>";
+        echo "<li>" . $row['comment_id'] . ":" . htmlspecialchars($row['comment'],ENT_QUOTES) . "(" . $row['name'] .")" .  "</li>";
         for($i = 0;$i < $length;$i++){
             echo "</ul>";
         }
