@@ -18,6 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     exit();
 }
 
+echo '<link rel="stylesheet" href="/css/base.css">';
 echo "<h2>隣接リスト(adjacency list)</h2>";
 
 if (array_key_exists('key', $_GET)) {

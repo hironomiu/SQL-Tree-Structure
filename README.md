@@ -8,9 +8,21 @@
 $ make setup DB_USER=root DB_NAME=sqltreestructure
 ```
 
-## 実行
+## 階層SQL
+### 隣接リスト(Adjacency List)
+```
+./src/adjacency_list.php
+./src/adjacency_list_accounts.php
+```
+
+### 経路列挙(Path Enumeration)
+```
+./src/path_enumeration.php
+```
+
+## ビルトインWebサーバ
 
 ```
-$ php -S localhost:8000
+$ make builtinserver
 ```
 
