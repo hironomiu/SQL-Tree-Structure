@@ -1,0 +1,6 @@
+h2 {
+    color: #364e96;/*文字色*/
+    border: solid 3px #364e96;/*線色*/
+    padding: 0.5em;/*文字周りの余白*/
+    border-radius: 0.5em;/*角丸*/
+  }
