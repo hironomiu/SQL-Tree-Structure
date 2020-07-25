@@ -1,10 +1,7 @@
 <?php
+require_once('./db.php');
 echo "<h2>隣接リスト</h2>";
-try{
-    $pdo = new PDO(sprintf('mysql:host=%s;dbname=%s;charset=utf8', 'localhost', 'chapter2'), 'root', 'vagrant', array(PDO::ATTR_EMULATE_PREPARES => false));
-}catch (PDOException $e) {
-    die('Connection failed: ' . $e->getMessage());
-}
+
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
     $parent_id = null;
     if(!empty($_POST['key'])){

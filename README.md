@@ -1,11 +1,16 @@
-# SQLアンチパターン
-## chapter2
-### DBセットアップ
-```
-$ mysql -u xxx -p
-mysql> create database chapter2;
+# SQL-Tree-Structure
 
-$ mysql -u xxx -p chapter2 < drop.sql
-$ mysql -u xxx -p chapter2 < create.sql
+## 事前準備
+動作用のDB(MySQL),テーブル、レコードの作成
+
+例
+```
+$ make setup DB_USER=root DB_NAME=sqltreestructure
+```
+
+## 実行
+
+```
+$ php -S localhost:8000
 ```
 

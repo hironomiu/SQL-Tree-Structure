@@ -1,3 +1,12 @@
+drop table if exists Comments;
+drop table if exists Comments_22;
+drop table if exists Comments_251;
+drop table if exists Comments_252;
+drop table if exists TreePaths;
+drop table if exists Comments_253;
+drop table if exists Bugs;
+drop table if exists Accounts;
+
 create table Comments (
   comment_id   SERIAL PRIMARY KEY,
   parent_id    BIGINT UNSIGNED,
