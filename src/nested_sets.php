@@ -80,9 +80,9 @@ function ul($rows)
     $length = 0;
     echo "<ul>";
 
+    // 各rowの深さを持つ配列の初期化
+    $lengths = [];
     foreach ($rows as $key => $row) {
-        // 各rowの深さを持つ配列の初期化
-        $lengths[] = null;
         // `$key === 0`は深さ1段目が自明なので処理不要
         if ($key !== 0) {
             // 親レコードのnsleft&nsrightに自身のレコードのnsleftが範囲内なら深さをプラスする
