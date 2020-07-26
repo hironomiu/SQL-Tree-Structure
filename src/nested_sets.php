@@ -1,18 +1,18 @@
 <?php
 require_once(__DIR__ . '/db.php');
 
-if($_SERVER['REQUEST_METHOD'] === 'POST'){
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // 階層の深さを取得する
     $stmt = $pdo->prepare('select count(c2.comment_id) as depth from Comments_252 as c1 inner join Comments_252 as c2 on c1.nsleft between c2 .nsleft and c2.nsright where c1.comment_id = :COMMENT_ID group by c1.comment_id');
-    $stmt->bindValue(':COMMENT_ID',$_POST['key']);
+    $stmt->bindValue(':COMMENT_ID', $_POST['key']);
     $stmt->execute();
     $depth = $stmt->fetch();
-    if(empty($depth)){
+    if (empty($depth)) {
         // 対象の親コメントの最大nsrightを求める
         $stmt = $pdo->prepare("select nsleft,nsleft + 10000000 as nsright from (select max(nsright) + 1 as nsleft from Comments_252) a");
         $stmt->execute();
         $row = $stmt->fetch();
-    }else{
+    } else {
         // 対象の親コメントの最大nsrightを求める
         $stmt = $pdo->prepare("select nsright from Comments_252 where comment_id = :COMMENT_ID");
         $stmt->bindValue(':COMMENT_ID', $_POST['key']);
@@ -42,9 +42,9 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     */
 
     $stmt = $pdo->prepare("insert into Comments_252(nsleft,nsright,bug_id,author,comment_date,comment) values(:NSLEFT,:NSRIGHT,1,4,now(),:COMMENT)");
-    $stmt->bindValue(':NSLEFT',$row['nsleft']);
-    $stmt->bindValue(':NSRIGHT',$row['nsright']);
-    $stmt->bindValue(':COMMENT',$_POST['comment']);
+    $stmt->bindValue(':NSLEFT', $row['nsleft']);
+    $stmt->bindValue(':NSRIGHT', $row['nsright']);
+    $stmt->bindValue(':COMMENT', $_POST['comment']);
     $stmt->execute();
     header('location: nested_sets.php');
     exit();
@@ -53,11 +53,11 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 echo '<link rel="stylesheet" href="/css/base.css">';
 echo "<h2>入れ子集合(Nested sets)</h2>";
 
-$key = array_key_exists('key',$_GET) ?  $_GET['key'] : 1;
+$key = array_key_exists('key', $_GET) ?  $_GET['key'] : 1;
 
 if (array_key_exists('key', $_GET)) {
     $stmt = $pdo->prepare("select c2.*,a.name from Comments_252 as c1 inner join Comments_252 as c2 on c2.nsleft between c1.nsleft and c1.nsright inner join Accounts a on c2.author = a.account_id where c1.comment_id = :COMMENT_ID order by c2.nsleft");
-    $stmt->bindValue(':COMMENT_ID',$key);
+    $stmt->bindValue(':COMMENT_ID', $key);
     $stmt->execute();
     $rows = $stmt->fetchAll();
     ul($rows);
@@ -65,27 +65,33 @@ if (array_key_exists('key', $_GET)) {
     $stmt = $pdo->prepare('select c1.comment_id,count(c2.comment_id) as depth from Comments_252 as c1 inner join Comments_252 as c2 on c1.nsleft between c2 .nsleft and c2.nsright group by c1.comment_id having depth = 1');
     $stmt->execute();
     $comment_ids = $stmt->fetchAll();
-    foreach($comment_ids as $comment_id){
+    foreach ($comment_ids as $comment_id) {
         $stmt = $pdo->prepare("select c2.*,a.name from Comments_252 as c1 inner join Comments_252 as c2 on c2.nsleft between c1.nsleft and c1.nsright inner join Accounts a on c2.author = a.account_id where c1.comment_id = :COMMENT_ID order by c2.nsleft");
-        $stmt->bindValue(':COMMENT_ID',$comment_id['comment_id']);
+        $stmt->bindValue(':COMMENT_ID', $comment_id['comment_id']);
         $stmt->execute();
         $rows = $stmt->fetchAll();
         ul($rows);
     }
 }
 
-function ul($rows){
+function ul($rows)
+{
     $length = 0;
     echo "<ul>";
 
     foreach ($rows as $key => $row) {
+        // 各rowの深さを持つ
+        $lengths[] = null;
+        // `$key === 0`とは深さ1段目のものを指す
         if ($key === 0) {
             null;
         } else {
+            // 親レコードのnsleft&nsrightに自身のレコードのnsleftが範囲内なら深さをプラスする
             if ($rows[$key - 1]['nsleft'] < $row['nsleft'] && $rows[$key - 1]['nsright'] > $row['nsleft']) {
                 $length++;
             } else {
                 for ($i = 2; $i < $key + 1; $i++) {
+                    // 自身の範囲内の親を見つけたらその親の深さにプラスした値を持ち抜ける
                     if ($rows[$key - $i]['nsleft'] < $row['nsleft'] && $rows[$key - $i]['nsright'] > $row['nsleft']) {
                         $length = $lengths[$key - $i] + 1;
                         break;
@@ -100,16 +106,17 @@ function ul($rows){
         for ($i = 0; $i < $length; $i++) {
             echo "</ul>";
         }
+        // 深さを格納
         $lengths[$key] = $length;
     }
-echo "</ul>";
+    echo "</ul>";
 }
 ?>
 
 <form method="POST" action="">
     <div>対象のコメントID<br>
-    <input type="text" name="key" /><br></div>
+        <input type="text" name="key" /><br></div>
     <div>コメント<br>
-    <textarea name="comment">comment</textarea><br></div>
-    <br><input type="submit" class="button"/>
+        <textarea name="comment">comment</textarea><br></div>
+    <br><input type="submit" class="button" />
 </form>
