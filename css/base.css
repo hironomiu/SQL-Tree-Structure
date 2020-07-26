@@ -3,4 +3,56 @@ h2 {
     border: solid 3px #364e96;/*線色*/
     padding: 0.5em;/*文字周りの余白*/
     border-radius: 0.5em;/*角丸*/
-  }
+}
+input{
+    border:0;
+padding:10px;
+font-size:1.3em;
+font-family:Arial, sans-serif;
+color:#aaa;
+border:solid 1px #ccc;
+margin:0 0 20px;
+width:300px;
+}
+textarea{
+    border:0;
+padding:10px;
+font-size:1.3em;
+font-family:Arial, sans-serif;
+color:#aaa;
+border:solid 1px #ccc;
+margin:0 0 20px;
+width:300px;
+}
+
+ul {
+	padding: 0.5em;
+	list-style-type: none;
+}
+ul li {
+	position: relative;
+	padding: 0.5em 1em 0.5em 2.3em;
+	margin-bottom:5px;
+	border-bottom: 1px solid rgba(25,118,210,1);
+}
+ul li:after,
+ul li:before{
+	content:'';
+	position: absolute;
+	border-radius: 50%;
+}
+ul li:before {
+	top: 50%;
+	left: 0.2em;
+	width: 17px;
+	height: 17px;
+	background: rgba(25,118,210, 1);
+	transform: translateY(-50%);
+}
+ul li:after {
+	top: 1.1em;
+	left: 0.7em;
+	width: 14px;
+	height: 14px;
+	background: rgba(25,118,210, 0.5);
+}
