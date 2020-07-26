@@ -2,15 +2,27 @@
 require_once(__DIR__ . '/db.php');
 
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
-    $stmt = $pdo->prepare("select nsright - 1 as nsright from Comments_252 where comment_id = :COMMENT_ID");
+    // 階層の深さを取得する
+    $stmt = $pdo->prepare('select count(c2.comment_id) as depth from Comments_252 as c1 inner join Comments_252 as c2 on c1.nsleft between c2 .nsleft and c2.nsright where c1.comment_id = :COMMENT_ID group by c1.comment_id');
+    $stmt->bindValue(':COMMENT_ID',$_POST['key']);
+    $stmt->execute();
+    $depth = $stmt->fetch();
+
+    // 対象の親コメントの最大nsrightを求める
+    $stmt = $pdo->prepare("select nsright from Comments_252 where comment_id = :COMMENT_ID");
     $stmt->bindValue(':COMMENT_ID',$_POST['key']);
     $stmt->execute();
     $max_nsright = $stmt->fetch();
 
-    $stmt = $pdo->prepare("select max(nsleft) + 100 as nsleft from Comments_252 where nsleft < :MAX_NSLEFT");
+    // 挿入対象のnsleft,nsrightを求める
+    $stmt = $pdo->prepare("
+    select nsleft,nsleft +  (1000000 / pow(10,:DEPTH1)) -1 as nsright from (select truncate(max(nsleft),-1 * (7 - :DEPTH2)) + (10000000 / pow(10,:DEPTH3)) + 1 as nsleft from Comments_252 where nsleft < :MAX_NSLEFT) a");
+    $stmt->bindValue(':DEPTH1',$depth['depth']);
+    $stmt->bindValue(':DEPTH2',$depth['depth']);
+    $stmt->bindValue(':DEPTH3',$depth['depth']);
     $stmt->bindValue(':MAX_NSLEFT',$max_nsright['nsright']);
     $stmt->execute();
-    $max_nsleft = $stmt->fetch();
+    $row = $stmt->fetch();
 
     /*
     $stmt = $pdo->prepare("update Comments_252 set nsleft = case when nsleft > :NSRIGHT1 then nsleft + 2 else nsleft end , nsright = nsright + 2 where nsright >= :NSRIGHT2");
@@ -26,8 +38,8 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     */
 
     $stmt = $pdo->prepare("insert into Comments_252(nsleft,nsright,bug_id,author,comment_date,comment) values(:NSLEFT,:NSRIGHT,1,4,now(),:COMMENT)");
-    $stmt->bindValue(':NSLEFT',$max_nsleft['nsleft']);
-    $stmt->bindValue(':NSRIGHT',$max_nsleft['nsleft'] + 100);
+    $stmt->bindValue(':NSLEFT',$row['nsleft']);
+    $stmt->bindValue(':NSRIGHT',$row['nsright'] + 100);
     $stmt->bindValue(':COMMENT',$_POST['comment']);
     $stmt->execute();
     header('location: nested_sets.php');
