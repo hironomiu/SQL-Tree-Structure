@@ -26,14 +26,14 @@ width:300px;
 }
 
 ul {
-	padding: 0.5em;
 	list-style-type: none;
 }
 ul li {
 	position: relative;
 	padding: 0.5em 1em 0.5em 2.3em;
 	margin-bottom:5px;
-	border-bottom: 1px solid rgba(25,118,210,1);
+    border-bottom: 1px solid rgba(25,118,210,1);
+    padding-inline-start: 40px;
 }
 ul li:after,
 ul li:before{

@@ -15,7 +15,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     $stmt->bindValue(':NSLEFT',$row['nsright'] + 2);
     $stmt->bindValue(':COMMENT',$_POST['comment']);
     $stmt->execute();
-    header('location: comments_252.php');
+    header('location: nested_sets.php');
     exit();
 }
 
@@ -60,7 +60,9 @@ echo "</ul>";
 ?>
 
 <form method="POST" action="">
-    <input type="text" name="key" /><br>
-    <textarea name="comment">comment</textarea><br>
-    <input type="submit" />
+    <div>対象のコメントID<br>
+    <input type="text" name="key" /><br></div>
+    <div>コメント<br>
+    <textarea name="comment">comment</textarea><br></div>
+    <br><input type="submit" />
 </form>

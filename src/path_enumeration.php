@@ -68,7 +68,9 @@ function commentsFindByCommentId($key,$pdo,$comment_id) {
 ?>
 
 <form method="POST" action="">
-    <input type="text" name="key" /><br>
-    <textarea name="comment">comment</textarea><br>
-    <input type="submit" />
+    <div>対象のコメントID<br>
+    <input type="text" name="key" /><br></div>
+    <div>コメント<br>
+    <textarea name="comment">comment</textarea><br></div>
+    <br><input type="submit" />
 </form>
