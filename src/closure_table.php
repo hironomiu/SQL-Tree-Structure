@@ -1,10 +1,5 @@
 <?php
-echo "<h2>閉包テーブル</h2>";
-try{
-    $pdo = new PDO(sprintf('mysql:host=%s;dbname=%s;charset=utf8', 'localhost', 'chapter2'), 'root', 'vagrant', array(PDO::ATTR_EMULATE_PREPARES => false));
-}catch (PDOException $e) {
-    die('Connection failed: ' . $e->getMessage());
-}
+require_once(__DIR__ . '/db.php');
 
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
     $pdo->beginTransaction();
@@ -18,9 +13,12 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     $stmt->bindValue(':DESCENDANT2',$pdo->lastInsertId());
     $stmt->execute();
     $pdo->commit();
-    header('location: comments_253.php');
+    header('location: closure_table.php');
     exit();
 }
+
+echo '<link rel="stylesheet" href="/css/base.css">';
+echo "<h2>閉包テーブル(Closure Table)</h2>";
 
 $key = array_key_exists('key',$_GET) ?  $_GET['key'] : 1;
 

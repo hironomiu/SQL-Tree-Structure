@@ -46,12 +46,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->bindValue(':NSRIGHT', $row['nsright']);
     $stmt->bindValue(':COMMENT', $_POST['comment']);
     $stmt->execute();
-    header('location: nested_sets.php');
+    header('location: nested_set.php');
     exit();
 }
 
 echo '<link rel="stylesheet" href="/css/base.css">';
-echo "<h2>入れ子集合(Nested sets)</h2>";
+echo "<h2>入れ子集合(Nested Set)</h2>";
 
 $key = array_key_exists('key', $_GET) ?  $_GET['key'] : 1;
 
