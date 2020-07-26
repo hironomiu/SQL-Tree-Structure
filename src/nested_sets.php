@@ -76,16 +76,15 @@ if (array_key_exists('key', $_GET)) {
 
 function ul($rows)
 {
+    // 深さの初期化
     $length = 0;
     echo "<ul>";
 
     foreach ($rows as $key => $row) {
-        // 各rowの深さを持つ
+        // 各rowの深さを持つ配列の初期化
         $lengths[] = null;
-        // `$key === 0`とは深さ1段目のものを指す
-        if ($key === 0) {
-            null;
-        } else {
+        // `$key === 0`は深さ1段目が自明なので処理不要
+        if ($key !== 0) {
             // 親レコードのnsleft&nsrightに自身のレコードのnsleftが範囲内なら深さをプラスする
             if ($rows[$key - 1]['nsleft'] < $row['nsleft'] && $rows[$key - 1]['nsright'] > $row['nsleft']) {
                 $length++;
