@@ -140,7 +140,8 @@ create table TreePaths (
   foreign key (descendant) references Comments_253(comment_id)
 );
 
-insert into Comments_253 values(null,1,1,now(),'このバグの原因は何かな？'),
+insert into Comments_253 values
+(null,1,1,now(),'このバグの原因は何かな？'),
 (null,1,2,now(),'ヌルポインターのせいじゃないかな'),
 (null,1,1,now(),'そうじゃないよ。それは確認済みだ。'),
 (null,1,3,now(),'無効な入力を調べてみたら？'),

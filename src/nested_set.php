@@ -53,11 +53,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 echo '<link rel="stylesheet" href="/css/base.css">';
 echo "<h2>入れ子集合(Nested Set)</h2>";
 
-$key = array_key_exists('key', $_GET) ?  $_GET['key'] : 1;
-
 if (array_key_exists('key', $_GET)) {
     $stmt = $pdo->prepare("select c2.*,a.name from Comments_252 as c1 inner join Comments_252 as c2 on c2.nsleft between c1.nsleft and c1.nsright inner join Accounts a on c2.author = a.account_id where c1.comment_id = :COMMENT_ID order by c2.nsleft");
-    $stmt->bindValue(':COMMENT_ID', $key);
+    $stmt->bindValue(':COMMENT_ID', $_GET['key']);
     $stmt->execute();
     $rows = $stmt->fetchAll();
     ul($rows);
