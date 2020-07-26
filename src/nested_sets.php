@@ -5,14 +5,29 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     $stmt = $pdo->prepare("select nsright - 1 as nsright from Comments_252 where comment_id = :COMMENT_ID");
     $stmt->bindValue(':COMMENT_ID',$_POST['key']);
     $stmt->execute();
-    $row = $stmt->fetch();
+    $max_nsright = $stmt->fetch();
+
+    $stmt = $pdo->prepare("select max(nsleft) + 100 as nsleft from Comments_252 where nsleft < :MAX_NSLEFT");
+    $stmt->bindValue(':MAX_NSLEFT',$max_nsright['nsright']);
+    $stmt->execute();
+    $max_nsleft = $stmt->fetch();
+
+    /*
     $stmt = $pdo->prepare("update Comments_252 set nsleft = case when nsleft > :NSRIGHT1 then nsleft + 2 else nsleft end , nsright = nsright + 2 where nsright >= :NSRIGHT2");
     $stmt->bindValue(':NSRIGHT1',$row['nsright']);
     $stmt->bindValue(':NSRIGHT2',$row['nsright']);
     $stmt->execute();
+
     $stmt = $pdo->prepare("insert into Comments_252(nsleft,nsright,bug_id,author,comment_date,comment) values(:NSRIGHT +  1,:NSLEFT + 2,1,4,now(),:COMMENT)");
     $stmt->bindValue(':NSRIGHT',$row['nsright'] + 1);
     $stmt->bindValue(':NSLEFT',$row['nsright'] + 2);
+    $stmt->bindValue(':COMMENT',$_POST['comment']);
+    $stmt->execute();
+    */
+
+    $stmt = $pdo->prepare("insert into Comments_252(nsleft,nsright,bug_id,author,comment_date,comment) values(:NSLEFT,:NSRIGHT,1,4,now(),:COMMENT)");
+    $stmt->bindValue(':NSLEFT',$max_nsleft['nsleft']);
+    $stmt->bindValue(':NSRIGHT',$max_nsleft['nsleft'] + 100);
     $stmt->bindValue(':COMMENT',$_POST['comment']);
     $stmt->execute();
     header('location: nested_sets.php');
@@ -64,5 +79,5 @@ echo "</ul>";
     <input type="text" name="key" /><br></div>
     <div>コメント<br>
     <textarea name="comment">comment</textarea><br></div>
-    <br><input type="submit" />
+    <br><input type="submit" class="button"/>
 </form>

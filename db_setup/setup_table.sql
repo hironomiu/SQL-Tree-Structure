@@ -79,7 +79,8 @@ insert into Comments_251 values(null,'1/',1,1,now(),'このバグの原因は何
 (null,'1/4/6/',1,1,now(),'よし、じゃあチェック機能を追加してもらえるかな？'),
 (null,'1/4/6/7/',1,3,now(),'了解。修正したよ。');
 
--- 2.5.2
+-- 入れ子集合(Nested sets)
+/*
 CREATE TABLE Comments_252 (
   comment_id   SERIAL PRIMARY KEY,
   nsleft int not null,
@@ -92,7 +93,6 @@ CREATE TABLE Comments_252 (
   foreign key (author) references Accounts(account_id)
 );
 
-
 insert into Comments_252 values(null,1,14,1,1,now(),'このバグの原因は何かな？'),
 (null,2,5,1,2,now(),'ヌルポインターのせいじゃないかな'),
 (null,3,4,1,1,now(),'そうじゃないよ。それは確認済みだ。'),
@@ -100,6 +100,27 @@ insert into Comments_252 values(null,1,14,1,1,now(),'このバグの原因は何
 (null,7,8,1,2,now(),'そうか、バグの原因はそれだな。'),
 (null,9,12,1,1,now(),'よし、じゃあチェック機能を追加してもらえるかな？'),
 (null,10,11,1,3,now(),'了解。修正したよ。');
+*/
+CREATE TABLE Comments_252 (
+  comment_id   bigint PRIMARY KEY auto_increment,
+  nsleft int not null,
+  nsright int not null,
+  bug_id bigint unsigned not null,
+  author bigint unsigned not null,
+  comment_date datetime not null, 
+  comment      TEXT NOT NULL,
+  foreign key (bug_id) references Bugs(bug_id),
+  foreign key (author) references Accounts(account_id)
+);
+
+insert into Comments_252 values
+(null,1,10000000,1,1,now(),'このバグの原因は何かな？'),
+(null,1000001,2000000,1,2,now(),'ヌルポインターのせいじゃないかな'),
+(null,1100001,1200000,1,1,now(),'そうじゃないよ。それは確認済みだ。'),
+(null,2000001,3000000,1,3,now(),'無効な入力を調べてみたら？'),
+(null,2100001,2200000,1,2,now(),'そうか、バグの原因はそれだな。'),
+(null,2200001,2300000,1,1,now(),'よし、じゃあチェック機能を追加してもらえるかな？'),
+(null,2210001,2220000,1,3,now(),'了解。修正したよ。');
 
 -- 2.5.3
 CREATE TABLE Comments_253 (
