@@ -77,9 +77,4 @@ http://localhost:8000/src/closure_table.php?key=2
 ./src/closure_table.php
 ```
 
-## ビルトインWebサーバ
-
-```
-$ make builtinserver
-```
 
