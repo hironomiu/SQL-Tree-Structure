@@ -8,6 +8,12 @@
 $ make setup DB_USER=root DB_NAME=sqltreestructure
 ```
 
+## ビルトインWebサーバ
+8000番でListen
+```
+$ make builtinserver
+```
+
 ## 階層SQL
 ### 隣接リスト(Adjacency List)
 ツリー全体を表示
