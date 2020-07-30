@@ -1,2 +1,3 @@
 vendor/*
 *.swp
+db_config.php
