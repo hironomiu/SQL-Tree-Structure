@@ -65,7 +65,7 @@ function ul($rows)
         for ($i = 0; $i < $length; $i++) {
             echo "<ul>";
         }
-        echo "<li>" . $row['comment_id'] . ":" .  $row['comment'] . "(" . $row['name'] . ")" .  "</li>";
+        echo "<li>" . $row['comment_id'] . ":" .  htmlspecialchars($row['comment'],ENT_QUOTES) . "(" . $row['name'] . ")" .  "</li>";
         for ($i = 0; $i < $length; $i++) {
             echo "</ul>";
         }
