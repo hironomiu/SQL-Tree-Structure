@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 echo '<link rel="stylesheet" href="/css/base.css">';
-echo "<h2>隣接リスト(adjacency list、AccountsとJOIN)</h2>";
+echo "<h1>隣接リスト(adjacency list、AccountsとJOIN)</h1>";
 
 if (array_key_exists('key', $_GET)) {
     $parent_stmt = $pdo->prepare("SELECT comment_id FROM Comments_22 WHERE comment_id = :COMMENT_ID");

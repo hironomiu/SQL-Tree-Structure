@@ -34,7 +34,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 }
 
 echo '<link rel="stylesheet" href="/css/base.css">';
-echo "<h2>閉包テーブル(Closure Table)</h2>";
+echo "<h1>閉包テーブル(Closure Table)</h1>";
 
 if (array_key_exists('key', $_GET)) {
     $stmt = $pdo->prepare("select descendant ,comment_id, comment, name, path from (select t1.descendant ,c.comment_id, c.comment, a.name, concat(group_concat(t1.ancestor separator'/'),'/') as path from TreePaths t1 inner join TreePaths t2 on t1.descendant = t2.descendant inner join Comments_253 c on c.comment_id = t1.descendant inner join Accounts a on a.account_id = c.author where t2.ancestor = :ANCESTOR group by t2.descendant) a order by path");
