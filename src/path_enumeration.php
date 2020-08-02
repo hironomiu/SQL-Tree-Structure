@@ -27,7 +27,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 }
 
 echo '<link rel="stylesheet" href="/css/base.css">';
-echo "<h2>経路列挙(Path Enumeration)</h2>";
+echo "<h1>経路列挙(Path Enumeration)</h1>";
 
 if (array_key_exists('key', $_GET)) {
     $parent_stmt = $pdo->prepare("SELECT c.comment_id , c.path , c.bug_id , c.author , c.comment_date , c.comment , a.name FROM Comments_251 c inner join Accounts a on c.author = a.account_id WHERE comment_id = :COMMENT_ID");
