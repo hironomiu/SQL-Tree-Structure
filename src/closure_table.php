@@ -1,5 +1,6 @@
 <?php
-require_once(__DIR__ . '/db.php');
+require_once('./lib/db.php');
+require_once('./lib/html.php');
 
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
     $stmt = $pdo->prepare("select count(*) as cnt from Comments_253 where comment_id = :COMMENT_ID");
@@ -55,8 +56,6 @@ if (array_key_exists('key', $_GET)) {
     }
 }
 
-
-
 function ul($rows)
 {
     echo "<ul>";
@@ -65,7 +64,8 @@ function ul($rows)
         for ($i = 0; $i < $length; $i++) {
             echo "<ul>";
         }
-        echo "<li>" . $row['comment_id'] . ":" .  htmlspecialchars($row['comment'],ENT_QUOTES) . "(" . $row['name'] . ")" .  "</li>";
+        echo unorderedList($row['comment_id'],$row['comment'],$row['name']);
+        // echo "<li>" . $row['comment_id'] . ":" .  htmlspecialchars($row['comment'],ENT_QUOTES) . "(" . $row['name'] . ")" .  "</li>";
         for ($i = 0; $i < $length; $i++) {
             echo "</ul>";
         }
@@ -77,7 +77,6 @@ function ul($rows)
 ?>
 
 <form method="POST" action="">
-    <input type="text" name="key" /><br>
     <textarea name="comment">comment</textarea><br>
     <input type="submit" />
 </form>

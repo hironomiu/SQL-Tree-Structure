@@ -1,5 +1,6 @@
 <?php
-require_once(__DIR__ . '/db.php');
+require_once('./lib/db.php');
+// require_once('./lib/html.php');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt = $pdo->prepare("SELECT count(*) as cnt FROM Comments WHERE comment_id = :COMMENT_ID");
