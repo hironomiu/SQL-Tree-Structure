@@ -12,3 +12,11 @@ function unorderedList($comment_id,$comment,$name){
         </form>
         </div>" . "</li>";
 }
+
+function newPost(){
+    return "<form method=\"POST\" action=\"\">
+    <div>新規コメント<br>
+    <textarea name=\"comment\"></textarea><br></div>
+    <br><input type=\"submit\" />
+    </form>";
+}

@@ -1,5 +1,6 @@
 <?php
-require_once(__DIR__ . '/db.php');
+require_once('./lib/db.php');
+require_once('./lib/html.php');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // 階層の深さを取得する
@@ -99,7 +100,8 @@ function ul($rows)
         for ($i = 0; $i < $length; $i++) {
             echo "<ul>";
         }
-        echo "<li>" . $row['comment_id'] . ":" .  htmlspecialchars($row['comment'],ENT_QUOTES) . "(" . $row['name'] . ")" .  "</li>";
+        echo unorderedList($row['comment_id'],$row['comment'],$row['name']);
+        // echo "<li>" . $row['comment_id'] . ":" .  htmlspecialchars($row['comment'],ENT_QUOTES) . "(" . $row['name'] . ")" .  "</li>";
         for ($i = 0; $i < $length; $i++) {
             echo "</ul>";
         }
@@ -108,12 +110,4 @@ function ul($rows)
     }
     echo "</ul>";
 }
-?>
-
-<form method="POST" action="">
-    <div>対象のコメントID<br>
-        <input type="text" name="key" /><br></div>
-    <div>コメント<br>
-        <textarea name="comment">comment</textarea><br></div>
-    <br><input type="submit" class="button" />
-</form>
+echo newPost();

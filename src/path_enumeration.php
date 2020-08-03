@@ -1,5 +1,6 @@
 <?php
-require_once('./db.php');
+require_once('./lib/db.php');
+require_once('./lib/html.php');
 
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
     $stmt = $pdo->prepare("select count(*) as cnt from Comments_251 where comment_id = :COMMENT_ID");
@@ -41,7 +42,8 @@ $parent_rows = $parent_stmt->fetchAll();
 foreach ($parent_rows as $row) {
     if (isset($row['comment'])) {
         echo "<ul>";
-        echo "<li>" . $row['comment_id'] . ":" .  htmlspecialchars($row['comment'],ENT_QUOTES) . "(" . $row['name'] . ")" .  "</li>";
+        echo unorderedList($row['comment_id'],$row['comment'],$row['name']);
+        // echo "<li>" . $row['comment_id'] . ":" .  htmlspecialchars($row['comment'],ENT_QUOTES) . "(" . $row['name'] . ")" .  "</li>";
         $rows = commentsFindByCommentId($row['path'], $pdo, $row['comment_id']);
         echo "</ul>";
     }
@@ -58,19 +60,12 @@ function commentsFindByCommentId($key,$pdo,$comment_id) {
         for($i = 0;$i < $length;$i++){
             echo "<ul>";
         }
-        echo "<li>" . $row['comment_id'] . ":" . htmlspecialchars($row['comment'],ENT_QUOTES) . "(" . $row['name'] .")" .  "</li>";
+        echo unorderedList($row['comment_id'],$row['comment'],$row['name']);
+        // echo "<li>" . $row['comment_id'] . ":" . htmlspecialchars($row['comment'],ENT_QUOTES) . "(" . $row['name'] .")" .  "</li>";
         for($i = 0;$i < $length;$i++){
             echo "</ul>";
         }
     } 
 }
 
-?>
-
-<form method="POST" action="">
-    <div>対象のコメントID<br>
-    <input type="text" name="key" /><br></div>
-    <div>コメント<br>
-    <textarea name="comment">comment</textarea><br></div>
-    <br><input type="submit" />
-</form>
+echo newPost();

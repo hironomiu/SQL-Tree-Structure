@@ -59,10 +59,4 @@ function commentsFindByCommentId($key, $pdo)
     }
 }
 
-?>
-
-<form method="POST" action="">
-    <div>新規コメント<br>
-    <textarea name="comment"></textarea><br></div>
-    <br><input type="submit" />
-</form>
+echo newPost();

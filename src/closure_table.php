@@ -73,10 +73,4 @@ function ul($rows)
     echo "</ul>";
 }
 
-
-?>
-
-<form method="POST" action="">
-    <textarea name="comment">comment</textarea><br>
-    <input type="submit" />
-</form>
+echo newPost();

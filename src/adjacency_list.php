@@ -1,6 +1,6 @@
 <?php
 require_once('./lib/db.php');
-// require_once('./lib/html.php');
+require_once('./lib/html.php');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt = $pdo->prepare("SELECT count(*) as cnt FROM Comments WHERE comment_id = :COMMENT_ID");
@@ -80,10 +80,4 @@ function commentsFindByCommentId($key, $pdo)
     }
 }
 
-?>
-
-<form method="POST" action="">
-    <div>新規コメント<br>
-    <textarea name="comment">comment</textarea><br></div>
-    <br><input type="submit" />
-</form>
+echo newPost();
