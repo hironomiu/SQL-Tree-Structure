@@ -40,7 +40,7 @@ foreach ($parent_rows as $key) {
         // echo "<li>" . $row['comment_id'] . ":" . htmlspecialchars($row['comment'],ENT_QUOTES) . "</li>";
         echo "<li>" . 
         "<div onclick=\"obj=document.getElementById('open" . $row['comment_id'] . "').style; obj.display=(obj.display=='none')?'block':'none';\">
-        <a style=\"cursor:pointer;\">" . $row['comment_id'] . ":" . htmlspecialchars($row['comment'],ENT_QUOTES) . "</a>
+        <a style=\"cursor:pointer;\">" . $row['comment_id'] . ":" . htmlspecialchars($row['comment'],ENT_QUOTES) . "▼折畳み</a>
         </div>
         <div id=\"open" . $row['comment_id'] . "\" style=\"display:none;clear:both;\">
         <form method=\"POST\" action=\"\">
@@ -65,7 +65,7 @@ function commentsFindByCommentId($key, $pdo)
         // echo "<li>" . $row['comment_id'] . ":" . htmlspecialchars($row['comment'],ENT_QUOTES) . "</li>";
         echo "<li>" . 
         "<div onclick=\"obj=document.getElementById('open" . $row['comment_id'] . "').style; obj.display=(obj.display=='none')?'block':'none';\">
-        <a style=\"cursor:pointer;\">" . $row['comment_id'] . ":" . htmlspecialchars($row['comment'],ENT_QUOTES) . "</a>
+        <a style=\"cursor:pointer;\">" . $row['comment_id'] . ":" . htmlspecialchars($row['comment'],ENT_QUOTES) . "▼折畳み</a>
         </div>
         <div id=\"open" . $row['comment_id'] . "\" style=\"display:none;clear:both;\">
         <form method=\"POST\" action=\"\">

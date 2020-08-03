@@ -38,7 +38,19 @@ foreach ($parent_rows as $key) {
     $stmt->execute();
     $row = $stmt->fetch();
     if (isset($row['comment'])) {
-        echo "<ul>" . "<li>" . $row['comment_id'] . ":" . htmlspecialchars($row['comment'],ENT_QUOTES) . "(" . $row['name'] . ")" .  "</li>";
+        echo "<ul>";
+        // echo "<li>" . $row['comment_id'] . ":" . htmlspecialchars($row['comment'],ENT_QUOTES) . "(" . $row['name'] . ")" .  "</li>";
+        echo "<li>" . 
+        "<div onclick=\"obj=document.getElementById('open" . $row['comment_id'] . "').style; obj.display=(obj.display=='none')?'block':'none';\">
+        <a style=\"cursor:pointer;\">" . $row['comment_id'] . ":" . htmlspecialchars($row['comment'],ENT_QUOTES) . "(" . $row['name'] . ")▼折畳み</a>
+        </div>
+        <div id=\"open" . $row['comment_id'] . "\" style=\"display:none;clear:both;\">
+        <form method=\"POST\" action=\"\">
+        <input type=\"hidden\" name=\"key\" value=\"" . $row['comment_id'] . "\"/><br>
+        <textarea name=\"comment\">comment</textarea><br>
+        <br><input type=\"submit\" />
+        </form>
+        </div>" . "</li>";
         commentsFindByCommentId($key['comment_id'], $pdo);
         echo "</ul>";
     }
@@ -51,7 +63,18 @@ function commentsFindByCommentId($key, $pdo)
     $rows = $stmt->fetchAll();
     foreach ($rows as $row) {
         echo "<ul>";
-        echo "<li>" . $row['comment_id'] . ":" . htmlspecialchars($row['comment'],ENT_QUOTES) . "(" . $row['name'] . ")" .  "</li>";
+        // echo "<li>" . $row['comment_id'] . ":" . htmlspecialchars($row['comment'],ENT_QUOTES) . "(" . $row['name'] . ")" .  "</li>";
+        echo "<li>" . 
+        "<div onclick=\"obj=document.getElementById('open" . $row['comment_id'] . "').style; obj.display=(obj.display=='none')?'block':'none';\">
+        <a style=\"cursor:pointer;\">" . $row['comment_id'] . ":" . htmlspecialchars($row['comment'],ENT_QUOTES) . "(" . $row['name'] . ")▼折畳み</a>
+        </div>
+        <div id=\"open" . $row['comment_id'] . "\" style=\"display:none;clear:both;\">
+        <form method=\"POST\" action=\"\">
+        <input type=\"hidden\" name=\"key\" value=\"" . $row['comment_id'] . "\"/><br>
+        <textarea name=\"comment\">comment</textarea><br>
+        <br><input type=\"submit\" />
+        </form>
+        </div>" . "</li>";
         commentsFindByCommentId($row['comment_id'], $pdo);
         echo "</ul>";
     }
@@ -60,9 +83,7 @@ function commentsFindByCommentId($key, $pdo)
 ?>
 
 <form method="POST" action="">
-    <div>対象のコメントID<br>
-    <input type="text" name="key" /><br></div>
-    <div>コメント<br>
+    <div>新規コメント<br>
     <textarea name="comment">comment</textarea><br></div>
     <br><input type="submit" />
 </form>
