@@ -8,6 +8,15 @@
 $ make setup DB_USER=root DB_NAME=sqltreestructure
 ```
 
+## 動作環境
+PHP7系で動作確認
+```
+$ php -v
+PHP 7.3.11 (cli) (built: Apr 17 2020 19:14:14) ( NTS )
+Copyright (c) 1997-2018 The PHP Group
+Zend Engine v3.3.11, Copyright (c) 1998-2018 Zend Technologies
+```
+
 ## ビルトインWebサーバ
 8000番でListen
 ```
