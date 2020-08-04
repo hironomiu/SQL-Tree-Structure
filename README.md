@@ -8,6 +8,9 @@
 $ make setup DB_USER=root DB_NAME=sqltreestructure
 ```
 
+## DB接続
+`./src/config/db_config_org.php`を`./src/config/db_config.php`に複製し適時編集
+
 ## 動作環境
 PHP7系で動作確認
 ```
