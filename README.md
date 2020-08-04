@@ -12,7 +12,7 @@ $ make setup DB_USER=root DB_NAME=sqltreestructure
 `./src/config/db_config_org.php`を`./src/config/db_config.php`に複製し適時編集
 
 ## 動作環境
-PHP7系で動作確認
+PHP7系で動作を確認
 ```
 $ php -v
 PHP 7.3.11 (cli) (built: Apr 17 2020 19:14:14) ( NTS )
