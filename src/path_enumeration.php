@@ -50,7 +50,7 @@ foreach ($parent_rows as $row) {
 }
 
 function commentsFindByCommentId($key,$pdo,$comment_id) { 
-    $stmt = $pdo->prepare("SELECT * FROM Comments_251 c inner join Accounts a on c.author = a.account_id WHERE c.path like concat(:PATH,'%') and c.comment_id != :COMMENT_ID order by c.path");
+    $stmt = $pdo->prepare("SELECT c.comment_id,c.path,c.comment,a.name FROM Comments_251 c inner join Accounts a on c.author = a.account_id WHERE c.path like concat(:PATH,'%') and c.comment_id != :COMMENT_ID order by c.path");
     $stmt->bindValue(':PATH',$key);
     $stmt->bindValue(':COMMENT_ID',$comment_id);
     $stmt->execute();
