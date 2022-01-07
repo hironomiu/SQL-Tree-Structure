@@ -9,10 +9,12 @@ $ make setup DB_USER=root DB_NAME=sqltreestructure
 ```
 
 ## DB接続
-`./src/config/db_config_org.php`を`./src/config/db_config.php`に複製し適時編集
+`make setup`で`./src/config/db_config_org.php`から複製した`./src/config/db_config.php`に適時編集
 
 ## 動作環境
-PHP7系で動作を確認
+PHP7系,8系で動作を確認
+
+7系
 ```
 $ php -v
 PHP 7.3.11 (cli) (built: Apr 17 2020 19:14:14) ( NTS )
@@ -20,10 +22,26 @@ Copyright (c) 1997-2018 The PHP Group
 Zend Engine v3.3.11, Copyright (c) 1998-2018 Zend Technologies
 ```
 
-## ビルトインWebサーバ
-8000番でListen
+8系
 ```
-$ make builtinserver
+$ php -v
+PHP 8.1.1 (cli) (built: Dec 17 2021 23:49:52) (NTS)
+Copyright (c) The PHP Group
+Zend Engine v4.1.1, Copyright (c) Zend Technologies
+    with Zend OPcache v8.1.1, Copyright (c), by Zend Technologies
+```
+
+## ビルトインWebサーバ
+8888番でListen
+
+```
+$ make server
+```
+
+PHP_PORTで指定可能
+
+```
+make server PHP_PORT=9999
 ```
 
 ## 階層構造データSQL

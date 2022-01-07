@@ -40,7 +40,7 @@ foreach ($parent_rows as $key) {
     $row = $stmt->fetch();
     if (isset($row['comment'])) {
         echo "<ul>";
-        echo unorderedList($row['comment_id'],$row['comment'],$row['name']);
+        echo unorderedList($row['comment_id'], $row['comment'], $row['name']);
         commentsFindByCommentId($key['comment_id'], $pdo);
         echo "</ul>";
     }
@@ -53,10 +53,11 @@ function commentsFindByCommentId($key, $pdo)
     $rows = $stmt->fetchAll();
     foreach ($rows as $row) {
         echo "<ul>";
-        echo unorderedList($row['comment_id'],$row['comment'],$row['name']);
+        echo unorderedList($row['comment_id'], $row['comment'], $row['name']);
         commentsFindByCommentId($row['comment_id'], $pdo);
         echo "</ul>";
     }
 }
 
 echo newPost();
+echo toTop();

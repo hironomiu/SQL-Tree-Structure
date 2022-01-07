@@ -100,7 +100,7 @@ function ul($rows)
         for ($i = 0; $i < $length; $i++) {
             echo "<ul>";
         }
-        echo unorderedList($row['comment_id'],$row['comment'],$row['name']);
+        echo unorderedList($row['comment_id'], $row['comment'], $row['name']);
         // echo "<li>" . $row['comment_id'] . ":" .  htmlspecialchars($row['comment'],ENT_QUOTES) . "(" . $row['name'] . ")" .  "</li>";
         for ($i = 0; $i < $length; $i++) {
             echo "</ul>";
@@ -111,3 +111,4 @@ function ul($rows)
     echo "</ul>";
 }
 echo newPost();
+echo toTop();

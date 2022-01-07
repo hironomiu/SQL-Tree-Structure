@@ -57,7 +57,7 @@ ul li:after {
 	background: rgba(25,118,210, 0.5);
 }
 
-.button {
+input[type="submit"] {
 	display       : inline-block;
 	border-radius : 5%;          /* 角丸       */
 	font-size     : 18pt;        /* 文字サイズ */
@@ -71,8 +71,8 @@ ul li:after {
 	box-shadow    : 6px 6px 3px #666666;  /* 影の設定 */
 	border        : 2px solid rgba(102, 102, 255, 0.76);    /* 枠の指定 */
   }
-.button {
+/* input[type="submit"] {
 	box-shadow    : none;        /* カーソル時の影消去 */
 	color         : rgba(102, 102, 255, 0.76);     /* 背景色     */
 	background    : #ffffff;     /* 文字色     */
-  }
+  } */
