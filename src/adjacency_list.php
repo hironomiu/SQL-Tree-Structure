@@ -38,7 +38,6 @@ foreach ($parent_rows as $key) {
     $row = $stmt->fetch();
     if (isset($row['comment'])) {
         echo "<ul>";
-        // echo "<li>" . $row['comment_id'] . ":" . htmlspecialchars($row['comment'],ENT_QUOTES) . "</li>";
         echo unorderedList($row['comment_id'], $row['comment'], "no name");
         commentsFindByCommentId($key['comment_id'], $pdo);
         echo "</ul>";
@@ -53,7 +52,6 @@ function commentsFindByCommentId($key, $pdo)
     $rows = $stmt->fetchAll();
     foreach ($rows as $row) {
         echo "<ul>";
-        // echo "<li>" . $row['comment_id'] . ":" . htmlspecialchars($row['comment'],ENT_QUOTES) . "</li>";
         echo unorderedList($row['comment_id'], $row['comment'], "no name");
         commentsFindByCommentId($row['comment_id'], $pdo);
         echo "</ul>";
