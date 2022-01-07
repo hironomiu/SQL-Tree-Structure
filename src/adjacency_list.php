@@ -39,17 +39,7 @@ foreach ($parent_rows as $key) {
     if (isset($row['comment'])) {
         echo "<ul>";
         // echo "<li>" . $row['comment_id'] . ":" . htmlspecialchars($row['comment'],ENT_QUOTES) . "</li>";
-        echo "<li>" .
-            "<div onclick=\"obj=document.getElementById('open" . $row['comment_id'] . "').style; obj.display=(obj.display=='none')?'block':'none';\">
-        <a style=\"cursor:pointer;\">" . $row['comment_id'] . ":" . htmlspecialchars($row['comment'], ENT_QUOTES) . "▼折畳み</a>
-        </div>
-        <div id=\"open" . $row['comment_id'] . "\" style=\"display:none;clear:both;\">
-        <form method=\"POST\" action=\"\">
-        <input type=\"hidden\" name=\"key\" value=\"" . $row['comment_id'] . "\"/><br>
-        <textarea name=\"comment\">comment</textarea><br>
-        <br><input type=\"submit\" />
-        </form>
-        </div>" . "</li>";
+        echo unorderedList($row['comment_id'], $row['comment'], "no name");
         commentsFindByCommentId($key['comment_id'], $pdo);
         echo "</ul>";
     }
@@ -64,9 +54,7 @@ function commentsFindByCommentId($key, $pdo)
     foreach ($rows as $row) {
         echo "<ul>";
         // echo "<li>" . $row['comment_id'] . ":" . htmlspecialchars($row['comment'],ENT_QUOTES) . "</li>";
-        echo "<li>" .
-            "<div onclick=\"obj=document.getElementById('open" . $row['comment_id'] . "').style; obj.display=(obj.display=='none')?'block':'none';\">
-        <a style=\"cursor:pointer;\">" . $row['comment_id'] . ":" . htmlspecialchars($row['comment'], ENT_QUOTES) . "▼折畳み</a>" . addPost($row['comment_id']) . "</li>";
+        echo unorderedList($row['comment_id'], $row['comment'], "no name");
         commentsFindByCommentId($row['comment_id'], $pdo);
         echo "</ul>";
     }

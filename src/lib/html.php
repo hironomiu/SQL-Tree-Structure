@@ -14,18 +14,6 @@ function unorderedList($comment_id, $comment, $name)
         </div>" . "</li>";
 }
 
-function addPost($comment_id)
-{
-    return "</div>
-    <div id=\"open" . $comment_id . "\" style=\"display:none;clear:both;\">
-    <form method=\"POST\" action=\"\">
-    <input type=\"hidden\" name=\"key\" value=\"" . $comment_id . "\"/><br>
-    <textarea name=\"comment\" placeholder=\"comment\"></textarea><br>
-    <br><input type=\"submit\" />
-    </form>
-    </div>";
-}
-
 function newPost()
 {
     return "<form method=\"POST\" action=\"\">
