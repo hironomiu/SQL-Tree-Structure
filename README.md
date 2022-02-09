@@ -1,5 +1,9 @@
 # SQL-Tree-Structure
 
+階層構造データ(隣接リスト、経路列挙、入れ子集合、閉包テーブル)のサンプルコード
+
+![demo](./demo.gif)
+
 ## 事前準備
 動作用のDB(MySQL),テーブル、レコードの作成
 
@@ -31,8 +35,9 @@ Zend Engine v4.1.1, Copyright (c) Zend Technologies
     with Zend OPcache v8.1.1, Copyright (c), by Zend Technologies
 ```
 
-## ビルトインWebサーバ
-8888番でListen
+## Run
+
+ビルトインWebサーバを起動(デフォルトは8888番でListen)
 
 ```
 $ make server

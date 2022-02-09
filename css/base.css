@@ -6,23 +6,23 @@ h1 {
 }
 input{
     border:0;
-padding:10px;
-font-size:1.3em;
-font-family:Arial, sans-serif;
-color:#aaa;
-border:solid 1px #ccc;
-margin:0 0 20px;
-width:300px;
+	padding:10px;
+	font-size:1.3em;
+	font-family:Arial, sans-serif;
+	color:#aaa;
+	border:solid 1px #ccc;
+	margin:0 0 20px;
+	width:300px;
 }
 textarea{
     border:0;
-padding:10px;
-font-size:1.3em;
-font-family:Arial, sans-serif;
-color:#aaa;
-border:solid 1px #ccc;
-margin:0 0 20px;
-width:300px;
+	padding:10px;
+	font-size:1.3em;
+	font-family:Arial, sans-serif;
+	color:black;
+	border:solid 1px #ccc;
+	margin:0 0 20px;
+	width:300px;
 }
 
 ul {
@@ -71,8 +71,3 @@ input[type="submit"] {
 	box-shadow    : 6px 6px 3px #666666;  /* 影の設定 */
 	border        : 2px solid rgba(102, 102, 255, 0.76);    /* 枠の指定 */
   }
-/* input[type="submit"] {
-	box-shadow    : none;        /* カーソル時の影消去 */
-	color         : rgba(102, 102, 255, 0.76);     /* 背景色     */
-	background    : #ffffff;     /* 文字色     */
-  } */
